@@ -36,16 +36,23 @@ def render_ads_carousel():
     # كود الـ Carousel القديم نفسه بدون تعديل
     pass
 
-def query_backend_api(user_query):
-    """إرسال السؤال إلى FastAPI والحصول على الإجابة"""
+def query_backend(user_query):
     try:
-        response = requests.post(BACKEND_URL, json={"question": user_query}, timeout=30)
+        # رفع المهلة إلى 90 ثانية لمنح الـ RAG الخطة المجانية وقتاً كافياً
+        response = requests.post(
+            BACKEND_URL,
+            json={"question": user_query},
+            headers={"Content-Type": "application/json"},
+            timeout=90  
+        )
         if response.status_code == 200:
-            return response.json().get("answer")
+            return response.json().get("answer", "لم يتم العثور على إجابة.")
         else:
-            return "عذراً، حدث خطأ في التواصل مع خادم معالجة البيانات."
+            return f"خطأ من الخادم (رمز: {response.status_code})"
+    except requests.exceptions.Timeout:
+        return "⏳ الخادم يستغرق وقتاً أطول لمعالجة الطلب الأول (تحميل النماذج). يرجى الضغط على إرسال مرة أخرى الآن."
     except Exception as e:
-        return f"خطأ في الاتصال بالشبكة: {str(e)}"
+        return f"خطأ في الاتصال: {str(e)}"
 
 def process_rag_response(user_query):
     with st.chat_message("assistant", avatar=SYSTEM_AVATAR):
