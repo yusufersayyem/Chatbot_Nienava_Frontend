@@ -1,33 +1,165 @@
 import streamlit as st
-import requests
 import os
 import base64
+import requests
 import streamlit.components.v1 as components
 
-# 🟢 تم تحديث الرابط الافتراضي ليشمل /api/chat
-BACKEND_URL = os.getenv("BACKEND_URL", "https://chatbot-nienava-backend.onrender.com/api/chat")
+# رابط الباك إند على Render (سيتم استبداله بعد النشر)
+BACKEND_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-def query_backend_api(user_query):
-    """إرسال السؤال إلى FastAPI على Render مع رفع مهلة الانتظار"""
+ADS_DATA = [
+    {"image": "ads/ad1.webp", "url": "https://voyager.mynu.app/restaurant/675af6c4fc92f8671caef3cc", "title": "مطعم فاخر - عروض خاصة"},
+    {"image": "ads/ad2.webp", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
+    {"image": "ads/ad3.webp", "url": "https://baly.iq/taxi/", "title": "تطبيق بلي - توصيل سريع"},
+    {"image": "ads/ad4.webp", "url": "https://www.iq.zain.com/ar", "title": "زين العراق - أحدث العروض"},
+    {"image": "ads/ad5.webp", "url": "https://www.facebook.com/profile.php?id=100063940127604", "title": "إعلان راعي المنصة"},
+    {"image": "ads/ad6.webp", "url": "https://www.facebook.com/larsafoundation/", "title": "مؤسسة لارسا"},
+    {"image": "ads/ad7.webp", "url": "https://www.facebook.com/barqmouslba/", "title": "برق الموصل"},
+    {"image": "ads/ad8.webp", "url": "https://www.facebook.com/p/%D9%85%D8%AC%D9%85%D8%B9-%D8%B3%D9%8A%D8%AF-%D8%A7%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-3-%D9%81%D8%B1%D8%B9-%D8%A7%D9%84%D9%85%D8%AC%D9%85%D9%88%D8%B9%D8%A9-100066359418433/?locale=ku_TR", "title": "مجمع سيد الاسعار"},
+    {"image": "ads/ad9.webp", "url": "https://www.facebook.com/anaskashmola/", "title": "خدمات إعلانية متميزة"},
+    {"image": "ads/ad10.webp", "url": "https://alnoor.edu.iq/ar/", "title": "جامعة النور الأهلية"}
+]
+
+@st.cache_data
+def get_base64_image(image_path):
     try:
-        response = requests.post(
-            BACKEND_URL,
-            json={"question": user_query},
-            headers={"Content-Type": "application/json"},
-            timeout=120  # رفع المهلة إلى 120 ثانية لاستيقاظ Render وتجهيز الـ RAG
-        )
-        if response.status_code == 200:
-            return response.json().get("answer", "لم يتم العثور على إجابة.")
-        elif response.status_code == 404:
-            return f"❌ خطأ (404): المسار غير موجود. تأكد من أن الرابط هو:\n`{BACKEND_URL}`"
+        if os.path.exists(image_path):
+            with open(image_path, "rb") as image_file:
+                encoded_string = base64.b64encode(image_file.read()).decode()
+            ext = os.path.splitext(image_path)[1].replace(".", "").lower()
+            mime_types = {"gif": "image/gif", "webp": "image/webp", "png": "image/png", "jpg": "image/jpeg", "jpeg": "image/jpeg"}
+            mime_type = mime_types.get(ext, f"image/{ext}")
+            return f"data:{mime_type};base64,{encoded_string}"
         else:
-            return f"عذراً، حدث خطأ في الاستجابة من الخادم (رمز الخطأ: {response.status_code})."
-            
-    except requests.exceptions.Timeout:
-        return "⏳ الخادم يستغرق وقتاً أطول للاستيقاظ وتحميل النماذج. يرجى إرسال السؤال مرة أخرى الآن."
+            return "https://picsum.photos/500/200"
+    except Exception:
+        return "https://picsum.photos/500/200"
+
+def render_ads_carousel():
+    slides_html = ""
+    for ad in ADS_DATA:
+        img_src = get_base64_image(ad["image"])
+        slides_html += f"""
+        <div class="swiper-slide">
+            <a href="{ad['url']}" target="_blank" class="ad-card-link">
+                <div class="ad-card">
+                    <img src="{img_src}" alt="{ad['title']}" />
+                </div>
+            </a>
+        </div>
+        """
+
+    carousel_html = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+        <style>
+            body {{ margin: 0; font-family: system-ui, -apple-system, sans-serif; background: transparent; }}
+            .swiper {{ width: 100%; padding: 10px 5px 30px 5px; }}
+            .swiper-slide {{ width: 240px; }}
+            .ad-card-link {{ text-decoration: none; display: block; }}
+            .ad-card {{ width: 100%; height: 140px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s ease, box-shadow 0.2s ease; background: #f1f5f9; }}
+            .ad-card:hover {{ transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }}
+            .ad-card img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
+        </style>
+    </head>
+    <body>
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {slides_html}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        <script>
+            var swiper = new Swiper(".mySwiper", {{
+                slidesPerView: "auto",
+                spaceBetween: 15,
+                grabCursor: true,
+                autoplay: {{ delay: 2800, disableOnInteraction: false }},
+                pagination: {{ el: ".swiper-pagination", clickable: true }},
+            }});
+        </script>
+    </body>
+    </html>
+    """
+    components.html(carousel_html, height=195)
+
+def ask_backend(user_query):
+    try:
+        res = requests.post(f"{BACKEND_URL}/chat", json={"query": user_query}, timeout=60)
+        if res.status_code == 200:
+            return res.json().get("answer", "لم يتم الحصول على إجابة.")
+        else:
+            return "حدث خطأ في الاتصال بالخادم."
     except Exception as e:
-        return f"خطأ في الاتصال بالشبكة: {str(e)}"
+        return f"خطأ في الاتصال: {str(e)}"
+
+def main():
+    st.set_page_config(
+        page_title="المجيب الآلي - تربية نينوى وجامعة الموصل",
+        page_icon="🤖",
+        layout="centered",
+        initial_sidebar_state="collapsed"
+    )
+
+    if 'messages' not in st.session_state:
+        st.session_state.messages = []
+    if 'bot_response_count' not in st.session_state:
+        st.session_state.bot_response_count = 0
+
+    st.markdown("""
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
+            html, body, [class*="css"] { font-family: 'Cairo', sans-serif; direction: ltr !important; text-align: left !important; }
+            [data-testid="stSidebar"], [data-testid="stSidebarNav"], [data-testid="collapsedControl"] { display: none !important; }
+            footer {visibility: hidden;}
+            header [data-testid="stAppDeployButton"] {display: none;}
+        </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+        <div style="display: flex; align-items: center; gap: 12px; direction: ltr; margin-bottom: 15px;">
+            <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
+            <h1 style="margin: 0; color: #3b82f6; font-weight: 700; font-size: 22px;">المجيب الآلي (تربية نينوى & جامعة الموصل)</h1>
+        </div>
+    """, unsafe_allow_html=True)
+
+    st.write("🌟 **إعلانات متميزة:**")
+    render_ads_carousel()
+
+    for message in st.session_state.messages:
+        if message.get('type') == 'carousel':
+            with st.chat_message("assistant", avatar=AD_AVATAR):
+                st.write("📢 **عروض وإعلانات رعاية المنصة:**")
+                render_ads_carousel()
+        else:
+            avatar = USER_AVATAR if message['role'] == 'user' else SYSTEM_AVATAR
+            st.chat_message(message['role'], avatar=avatar).markdown(message['content'])
+
+    prompt = st.chat_input("اكتب سؤالك هنا...")
+    if prompt:
+        st.chat_message('user', avatar=USER_AVATAR).markdown(prompt)
+        st.session_state.messages.append({'role': 'user', 'type': 'text', 'content': prompt})
+
+        with st.chat_message("assistant", avatar=SYSTEM_AVATAR):
+            with st.spinner("جاري البحث ..."):
+                result = ask_backend(prompt)
+                st.markdown(result)
+
+        st.session_state.messages.append({'role': 'assistant', 'type': 'text', 'content': result})
+        st.session_state.bot_response_count += 1
+
+        if st.session_state.bot_response_count % 3 == 0:
+            with st.chat_message("assistant", avatar=AD_AVATAR):
+                st.write("📢 **عروض وإعلانات رعاية المنصة:**")
+                render_ads_carousel()
+            st.session_state.messages.append({'role': 'assistant', 'type': 'carousel'})
+
+if __name__ == "__main__":
+    main()
