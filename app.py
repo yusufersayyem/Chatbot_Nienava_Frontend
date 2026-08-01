@@ -75,7 +75,6 @@ def render_ads_carousel():
                 border: 1px solid rgba(255, 255, 255, 0.3);
             }}
             
-            /* خلفية الكارد المنعكسة والضبابية */
             .ad-card::before {{
                 content: "";
                 position: absolute;
@@ -100,7 +99,6 @@ def render_ads_carousel():
                 filter: blur(12px) brightness(0.95);
             }}
             
-            /* الصورة الرئيسية - أصبحت تغطي أقصى حدود الكارد أفقياً أو عمودياً */
             .ad-card img {{ 
                 position: relative;
                 z-index: 2;
@@ -173,13 +171,39 @@ def main():
             }
             footer { visibility: hidden; }
             header [data-testid="stAppDeployButton"] { display: none; }
+            
+            .whatsapp-btn {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                background-color: #25D366;
+                color: white !important;
+                padding: 6px 14px;
+                border-radius: 20px;
+                text-decoration: none;
+                font-weight: 600;
+                font-size: 14px;
+                box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3);
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .whatsapp-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 5px 12px rgba(37, 211, 102, 0.4);
+            }
         </style>
     """, unsafe_allow_html=True)
 
+    # رأس الصفحة مع زر التواصل عبر الواتساب
     st.markdown("""
-        <div style="display: flex; align-items: center; gap: 12px; direction: ltr; margin-bottom: 15px;">
-            <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
-            <h1 style="margin: 0; color: #3b82f6; font-weight: 700; font-size: 22px;">المجيب الآلي تربية نينوى وجامعة الموصل</h1>
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; direction: ltr; margin-bottom: 15px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
+                <h1 style="margin: 0; color: #3b82f6; font-weight: 700; font-size: 20px;">المجيب الآلي تربية نينوى وجامعة الموصل</h1>
+            </div>
+            <a href="https://wa.me/9647712345678" target="_blank" class="whatsapp-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/3670/3670051.png" width="20" height="20" alt="WhatsApp" />
+                <span>للتواصل معنا: 07712345678</span>
+            </a>
         </div>
     """, unsafe_allow_html=True)
 
