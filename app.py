@@ -10,8 +10,7 @@ SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-# مصفوفة الإعلانات باستخدام الروابط المباشرة (Direct Links) عالية الدقة من ImgBB
-# تنبيه: استبدل هذه الروابط بالروابط المباشرة الخاصة بك والتي تبدأ بـ https://i.ibb.co/ وتنتهي بـ .png أو .jpg
+# التأكيد على استخدام الروابط المباشرة الحقيقية للصور
 ADS_DATA = [
     {"image": "https://i.ibb.co/mFPQP30c/ad1.png", "url": "https://voyager.mynu.app/restaurant/675af6c4fc92f8671caef3cc", "title": "مطعم فاخر - عروض خاصة"},
     {"image": "https://i.ibb.co/BHpCVXw6/ad2.png", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
@@ -54,8 +53,9 @@ def render_ads_carousel():
                 width: 100%; 
                 padding: 10px 5px 30px 5px; 
             }}
+            /* تحديد عرض البطاقات نسبياً */
             .swiper-slide {{ 
-                width: 250px; 
+                width: 260px; 
             }}
             .ad-card-link {{ 
                 text-decoration: none; 
@@ -63,7 +63,7 @@ def render_ads_carousel():
             }}
             .ad-card {{ 
                 width: 100%; 
-                height: 140px; 
+                height: 145px; 
                 border-radius: 12px; 
                 overflow: hidden; 
                 box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
@@ -74,14 +74,15 @@ def render_ads_carousel():
                 transform: translateY(-4px) scale(1.02); 
                 box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
             }}
+            
+            /* حل مشكلة ملء الكارد والدقة والتشوه */
             .ad-card img {{ 
                 width: 100%; 
                 height: 100%; 
-                object-fit: cover; 
-                object-position: center; 
+                object-fit: cover; /* تجعل الصورة تملأ المساحة بالكامل بدون مط أو تشويه */
+                object-position: center; /* تضمن تتنصيف الصورة دائماً */
                 display: block;
-                /* تحسين حدة الصور ومنع التغبيش */
-                image-rendering: -webkit-optimize-contrast; 
+                image-rendering: -webkit-optimize-contrast; /* زيادة حدة ووضوح الصورة */
                 image-rendering: crisp-edges;
             }}
         </style>
@@ -131,7 +132,6 @@ def main():
     if 'bot_response_count' not in st.session_state:
         st.session_state.bot_response_count = 0
 
-    # تطبيق الاتجاه LTR والتنسيقات للبرنامج
     st.markdown("""
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -148,7 +148,6 @@ def main():
         </style>
     """, unsafe_allow_html=True)
 
-    # الهيدر العلوي
     st.markdown("""
         <div style="display: flex; align-items: center; gap: 12px; direction: ltr; margin-bottom: 15px;">
             <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
@@ -156,11 +155,9 @@ def main():
         </div>
     """, unsafe_allow_html=True)
 
-    # عرض الإعلانات في الصفحة الرئيسية
     st.write("**إعلانات:**")
     render_ads_carousel()
 
-    # إعادة عرض سجل المحادثة
     for message in st.session_state.messages:
         if message.get('type') == 'carousel':
             with st.chat_message("assistant", avatar=AD_AVATAR):
@@ -170,7 +167,6 @@ def main():
             avatar = USER_AVATAR if message['role'] == 'user' else SYSTEM_AVATAR
             st.chat_message(message['role'], avatar=avatar).markdown(message['content'])
 
-    # استقبال الإدخال من المستخدم
     prompt = st.chat_input("اكتب سؤالك هنا...")
     if prompt:
         st.chat_message('user', avatar=USER_AVATAR).markdown(prompt)
@@ -184,7 +180,6 @@ def main():
         st.session_state.messages.append({'role': 'assistant', 'type': 'text', 'content': result})
         st.session_state.bot_response_count += 1
 
-        # إظهار الإعلانات كل 3 إجابات
         if st.session_state.bot_response_count % 3 == 0:
             with st.chat_message("assistant", avatar=AD_AVATAR):
                 st.write("**اعلانات:**")
