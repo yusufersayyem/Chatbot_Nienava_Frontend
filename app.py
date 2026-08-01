@@ -15,7 +15,7 @@ ADS_DATA = [
     {
         "type": "whatsapp",
         "url": "https://wa.me/9647712345678", 
-        "title": "التواصل مع الواتساب", 
+        "title": "للاعلان التواصل مع الواتساب", 
         "phone": "07712345678"
     },
     {"type": "image", "image": "https://ik.imagekit.io/63rncvror/img1.png?updatedAt=1785603220307", "url": "https://www.facebook.com/profile.php?id=61589363754427", "title": "مجمع المثنى الطبي"},
