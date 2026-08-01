@@ -12,7 +12,7 @@ AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
 # تأكد أن هذه الروابط هي الـ Direct Links للصور بالأبعاد الأصلية من ImgBB
 ADS_DATA = [
-    {"image": "https://i.ibb.co/mFPQP30c/ad1.webp", "url": "https://voyager.mynu.app/restaurant/675af6c4fc92f8671caef3cc", "title": "مطعم فاخر - عروض خاصة"},
+    {"image": "https://i.ibb.co/hRNWYVYy/img1.jpg", "url": "https://www.facebook.com/profile.php?id=61589363754427", "title": "دروس تقوية"},
     {"image": "https://i.ibb.co/BHpCVXw6/ad2.webp", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
     {"image": "https://i.ibb.co/wFZ8Y205/ad3.webp", "url": "https://baly.iq/taxi/", "title": "تطبيق بلي - توصيل سريع"},
     {"image": "https://i.ibb.co/hFdR7xP1/ad4.webp", "url": "https://www.iq.zain.com/ar", "title": "زين العراق - أحدث العروض"},
