@@ -1,6 +1,6 @@
+import streamlit as st
 import os
 import requests
-import streamlit as st
 import streamlit.components.v1 as components
 
 # رابط الباك إند على Render
@@ -10,7 +10,7 @@ SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-# قائمة الإعلانات
+# قائمة الإعلانات (تمت إضافة إعلان التواصل عبر الواتساب)
 ADS_DATA = [
     {
         "type": "whatsapp",
@@ -25,7 +25,7 @@ ADS_DATA = [
     {"type": "image", "image": "https://i.ibb.co/TBQZh7mm/ad5.png", "url": "https://www.facebook.com/profile.php?id=100063940127604", "title": "إعلان راعي المنصة"},
     {"type": "image", "image": "https://i.ibb.co/FkkqgTp0/ad6.png", "url": "https://www.facebook.com/larsafoundation/", "title": "مؤسسة لارسا"},
     {"type": "image", "image": "https://i.ibb.co/GvYcqGz2/ad7.png", "url": "https://www.facebook.com/barqmouslba/", "title": "برق الموصل"},
-    {"type": "image", "image": "https://i.ibb.co/GQ5rhcrm/ad8.png", "url": "https://www.facebook.com/p/%D9%85%D8%AC%D9%85%D8%B9-%D8%B3%D9%8A%D8%AF-%D8%A7%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-3-%D9%81%D8%B1%D8%B9-%D8%A7%D9%8D%D8%AC%D9%85%D8%B9%D8%A9-100066359418433/?locale=ku_TR", "title": "مجمع سيد الاسعار"},
+    {"type": "image", "image": "https://i.ibb.co/GQ5rhcrm/ad8.png", "url": "https://www.facebook.com/p/%D9%85%D8%AC%D9%85%D8%B9-%D8%B3%D9%8A%D8%AF-%D8%A7%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-3-%D9%81%D8%B1%D8%B9-%D8%A7%D9%84%D9%85%D8%AC%D9%85%D8%B9%D8%A9-100066359418433/?locale=ku_TR", "title": "مجمع سيد الاسعار"},
     {"type": "image", "image": "https://i.ibb.co/Jjby0JYZ/ad9.png", "url": "https://www.facebook.com/anaskashmola/", "title": "خدمات إعلانية متميزة"},
     {"type": "image", "image": "https://i.ibb.co/FqCZ3Sch/ad10.png", "url": "https://alnoor.edu.iq/ar/", "title": "جامعة النور الأهلية"}
 ]
@@ -210,7 +210,6 @@ def main():
     if 'bot_response_count' not in st.session_state:
         st.session_state.bot_response_count = 0
 
-    # CSS لإخفاء عناصر المطور، التبويب العلوي، والتبويب السفلي بالكامل
     st.markdown("""
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -219,46 +218,11 @@ def main():
                 direction: ltr !important; 
                 text-align: left !important; 
             }
-            
-            /* 1. إخفاء القائمة الجانبية وزر التوسيع */
-            [data-testid="stSidebar"], 
-            [data-testid="stSidebarNav"], 
-            [data-testid="collapsedControl"] { 
+            [data-testid="stSidebar"], [data-testid="stSidebarNav"], [data-testid="collapsedControl"] { 
                 display: none !important; 
             }
-
-            /* 2. إخفاء الشريط العلوي الهيدر بالكامل وزر Manage App */
-            header, 
-            [data-testid="stHeader"], 
-            [data-testid="stToolbar"], 
-            [data-testid="stStatusWidget"] {
-                visibility: hidden !important;
-                height: 0rem !important;
-                display: none !important;
-            }
-
-            /* 3. إخفاء التبويب السفلي والشعار المائي والفوتر تماماً */
-            footer, 
-            [data-testid="stFooter"],
-            .viewerBadge_container__163Vn, 
-            .viewerBadge_link__1S137, 
-            #MainMenu,
-            div[class*="viewerBadge"],
-            div[class*="styles_viewerBadge"] {
-                visibility: hidden !important;
-                display: none !important;
-                height: 0px !important;
-            }
-
-            /* 4. تعديل المسافات السفلية */
-            .stApp {
-                margin-bottom: 0px !important;
-                padding-bottom: 0px !important;
-            }
-
-            header [data-testid="stAppDeployButton"] { 
-                display: none !important; 
-            }
+            footer { visibility: hidden; }
+            header [data-testid="stAppDeployButton"] { display: none; }
         </style>
     """, unsafe_allow_html=True)
 
