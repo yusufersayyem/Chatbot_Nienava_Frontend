@@ -1,6 +1,6 @@
-import streamlit as st
 import os
 import requests
+import streamlit as st
 import streamlit.components.v1 as components
 
 # رابط الباك إند على Render
@@ -10,7 +10,6 @@ SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-# قائمة الإعلانات (تمت إضافة إعلان التواصل عبر الواتساب)
 ADS_DATA = [
     {
         "type": "whatsapp",
@@ -109,7 +108,6 @@ def render_ads_carousel():
                 z-index: 1;
             }}
 
-            /* تصميم كارد الواتساب المميز */
             .whatsapp-card {{
                 background: linear-gradient(135deg, #128C7E 0%, #25D366 100%) !important;
                 flex-direction: column !important;
@@ -210,6 +208,7 @@ def main():
     if 'bot_response_count' not in st.session_state:
         st.session_state.bot_response_count = 0
 
+    # CSS لإخفاء جميع عناصر المطور وشريط Streamlit العلوي وزر Manage app
     st.markdown("""
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
@@ -218,11 +217,24 @@ def main():
                 direction: ltr !important; 
                 text-align: left !important; 
             }
+            /* إخفاء القائمة الجانبية تماماً */
             [data-testid="stSidebar"], [data-testid="stSidebarNav"], [data-testid="collapsedControl"] { 
                 display: none !important; 
             }
-            footer { visibility: hidden; }
-            header [data-testid="stAppDeployButton"] { display: none; }
+            /* إخفاء الهيدر الشامل، شريط الأدوات، وزر Manage app */
+            header, [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stStatusWidget"] {
+                visibility: hidden !important;
+                height: 0rem !important;
+                display: none !important;
+            }
+            /* إخفاء الفوتر والزر الخاص بـ Streamlit Community Cloud */
+            footer, .viewerBadge_container__163Vn, .viewerBadge_link__1S137, #MainMenu {
+                visibility: hidden !important;
+                display: none !important;
+            }
+            header [data-testid="stAppDeployButton"] { 
+                display: none !important; 
+            }
         </style>
     """, unsafe_allow_html=True)
 
