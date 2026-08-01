@@ -10,7 +10,7 @@ SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-# التأكيد على استخدام الروابط المباشرة الحقيقية للصور
+# قائمة الإعلانات
 ADS_DATA = [
     {"image": "https://ik.imagekit.io/63rncvror/img1.png?updatedAt=1785603220307", "url": "https://www.facebook.com/profile.php?id=61589363754427", "title": "مجمع المثنى الطبي"},
     {"image": "https://i.ibb.co/BHpCVXw6/ad2.png", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
@@ -53,9 +53,9 @@ def render_ads_carousel():
                 width: 100%; 
                 padding: 10px 5px 30px 5px; 
             }}
-            /* تحديد عرض البطاقات نسبياً */
+            /* تعديل عرض الكارد */
             .swiper-slide {{ 
-                width: 260px; 
+                width: 270px; 
             }}
             .ad-card-link {{ 
                 text-decoration: none; 
@@ -63,26 +63,32 @@ def render_ads_carousel():
             }}
             .ad-card {{ 
                 width: 100%; 
-                height: 145px; 
+                height: 155px; 
                 border-radius: 12px; 
                 overflow: hidden; 
                 box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
                 transition: transform 0.2s ease, box-shadow 0.2s ease; 
-                background: #f1f5f9; 
+                background: #ffffff; /* خلفية بيضاء لنظافة المظهر */
+                border: 1px solid #e2e8f0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }}
             .ad-card:hover {{ 
                 transform: translateY(-4px) scale(1.02); 
                 box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
             }}
             
-            /* حل مشكلة ملء الكارد والدقة والتشوه */
+            /* احتواء الصورة بالكامل دون قص */
             .ad-card img {{ 
-                width: 100%; 
-                height: 100%; 
-                object-fit: cover; /* تجعل الصورة تملأ المساحة بالكامل بدون مط أو تشويه */
-                object-position: center; /* تضمن تتنصيف الصورة دائماً */
+                max-width: 100%; 
+                max-height: 100%; 
+                width: auto;
+                height: auto;
+                object-fit: contain; /* تضمن إظهار الصورة بالكامل دون قص أو اجتزاء */
+                object-position: center; 
                 display: block;
-                image-rendering: -webkit-optimize-contrast; /* زيادة حدة ووضوح الصورة */
+                image-rendering: -webkit-optimize-contrast; 
                 image-rendering: crisp-edges;
             }}
         </style>
@@ -107,7 +113,7 @@ def render_ads_carousel():
     </body>
     </html>
     """
-    components.html(carousel_html, height=195)
+    components.html(carousel_html, height=205)
 
 def ask_backend(user_query):
     try:
