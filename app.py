@@ -53,18 +53,20 @@ def render_ads_carousel():
                 width: 100%; 
                 padding: 10px 5px 30px 5px; 
             }}
+            /* تكبير عرض الكارد أفقياً */
             .swiper-slide {{ 
-                width: 270px; 
+                width: 320px; 
             }}
             .ad-card-link {{ 
                 text-decoration: none; 
                 display: block; 
             }}
             
+            /* تكبير ارتفاع الكارد عمودياً */
             .ad-card {{ 
                 position: relative;
                 width: 100%; 
-                height: 155px; 
+                height: 180px; 
                 border-radius: 16px; 
                 overflow: hidden; 
                 box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
@@ -75,7 +77,7 @@ def render_ads_carousel():
                 border: 1px solid rgba(255, 255, 255, 0.3);
             }}
             
-            /* خلفية الكارد: انعكاس الصورة مع ضبابية وتكبير */
+            /* خلفية الكارد المنعكسة والضبابية */
             .ad-card::before {{
                 content: "";
                 position: absolute;
@@ -86,7 +88,7 @@ def render_ads_carousel():
                 background-image: var(--bg-image);
                 background-size: cover;
                 background-position: center;
-                filter: blur(16px) brightness(0.85); /* درجة الضبابية والإضاءة */
+                filter: blur(16px) brightness(0.85);
                 transform: scale(1.1);
                 z-index: 1;
             }}
@@ -100,19 +102,19 @@ def render_ads_carousel():
                 filter: blur(12px) brightness(0.95);
             }}
             
-            /* الصورة الرئيسية في منتصف الكارد */
+            /* الصورة الرئيسية - أصبحت تأخذ حجم أكبر داخلياً */
             .ad-card img {{ 
                 position: relative;
                 z-index: 2;
-                max-width: 92%; 
-                max-height: 92%; 
+                max-width: 96%; 
+                max-height: 96%; 
                 width: auto;
                 height: auto;
                 object-fit: contain; 
                 object-position: center; 
                 display: block;
                 border-radius: 8px;
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25)); /* ظل خفيف لإبراز الصورة فوق الانعكاس */
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
             }}
         </style>
     </head>
@@ -136,7 +138,8 @@ def render_ads_carousel():
     </body>
     </html>
     """
-    components.html(carousel_html, height=205)
+    # زيادة ارتفاع المكون ليتناسب مع الحجم الجديد للكارد
+    components.html(carousel_html, height=235)
 
 def ask_backend(user_query):
     try:
