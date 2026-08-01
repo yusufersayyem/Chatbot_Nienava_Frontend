@@ -10,18 +10,19 @@ SYSTEM_AVATAR = "https://cdn-icons-png.flaticon.com/512/4712/4712035.png"
 USER_AVATAR = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
 AD_AVATAR = "https://cdn-icons-png.flaticon.com/512/2997/2997311.png"
 
-# تأكد أن هذه الروابط هي الـ Direct Links للصور بالأبعاد الأصلية من ImgBB
+# مصفوفة الإعلانات باستخدام الروابط المباشرة (Direct Links) عالية الدقة من ImgBB
+# تنبيه: استبدل هذه الروابط بالروابط المباشرة الخاصة بك والتي تبدأ بـ https://i.ibb.co/ وتنتهي بـ .png أو .jpg
 ADS_DATA = [
-    {"image": "https://i.ibb.co/hRNWYVYy/img1.jpg", "url": "https://www.facebook.com/profile.php?id=61589363754427", "title": "دروس تقوية"},
-    {"image": "https://i.ibb.co/BHpCVXw6/ad2.webp", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
-    {"image": "https://i.ibb.co/wFZ8Y205/ad3.webp", "url": "https://baly.iq/taxi/", "title": "تطبيق بلي - توصيل سريع"},
-    {"image": "https://i.ibb.co/hFdR7xP1/ad4.webp", "url": "https://www.iq.zain.com/ar", "title": "زين العراق - أحدث العروض"},
-    {"image": "https://i.ibb.co/TBQZh7mm/ad5.webp", "url": "https://www.facebook.com/profile.php?id=100063940127604", "title": "إعلان راعي المنصة"},
-    {"image": "https://i.ibb.co/FkkqgTp0/ad6.webp", "url": "https://www.facebook.com/larsafoundation/", "title": "مؤسسة لارسا"},
-    {"image": "https://i.ibb.co/GvYcqGz2/ad7.webp", "url": "https://www.facebook.com/barqmouslba/", "title": "برق الموصل"},
-    {"image": "https://i.ibb.co/GQ5rhcrm/ad8.webp", "url": "https://www.facebook.com/p/%D9%85%D8%AC%D9%85%D8%B9-%D8%B3%D9%8A%D8%AF-%D8%A7%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-3-%D9%81%D8%B1%D8%B9-%D8%A7%D9%8D%D9%84%D9%85%D8%AC%D9%85%D9%88%D8%B9%D8%A9-100066359418433/?locale=ku_TR", "title": "مجمع سيد الاسعار"},
-    {"image": "https://i.ibb.co/Jjby0JYZ/ad9.webp", "url": "https://www.facebook.com/anaskashmola/", "title": "خدمات إعلانية متميزة"},
-    {"image": "https://i.ibb.co/FqCZ3Sch/ad10.webp", "url": "https://alnoor.edu.iq/ar/", "title": "جامعة النور الأهلية"}
+    {"image": "https://i.ibb.co/mFPQP30c/ad1.png", "url": "https://voyager.mynu.app/restaurant/675af6c4fc92f8671caef3cc", "title": "مطعم فاخر - عروض خاصة"},
+    {"image": "https://i.ibb.co/BHpCVXw6/ad2.png", "url": "https://www.facebook.com/najmatalmosulco/", "title": "شركة نجمة الموصل"},
+    {"image": "https://i.ibb.co/wFZ8Y205/ad3.png", "url": "https://baly.iq/taxi/", "title": "تطبيق بلي - توصيل سريع"},
+    {"image": "https://i.ibb.co/hFdR7xP1/ad4.png", "url": "https://www.iq.zain.com/ar", "title": "زين العراق - أحدث العروض"},
+    {"image": "https://i.ibb.co/TBQZh7mm/ad5.png", "url": "https://www.facebook.com/profile.php?id=100063940127604", "title": "إعلان راعي المنصة"},
+    {"image": "https://i.ibb.co/FkkqgTp0/ad6.png", "url": "https://www.facebook.com/larsafoundation/", "title": "مؤسسة لارسا"},
+    {"image": "https://i.ibb.co/GvYcqGz2/ad7.png", "url": "https://www.facebook.com/barqmouslba/", "title": "برق الموصل"},
+    {"image": "https://i.ibb.co/GQ5rhcrm/ad8.png", "url": "https://www.facebook.com/p/%D9%85%D8%AC%D9%85%D8%B9-%D8%B3%D9%8A%D8%AF-%D8%A7%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-3-%D9%81%D8%B1%D8%B9-%D8%A7%D9%84%D9%85%D8%AC%D9%85%D8%B9%D8%A9-100066359418433/?locale=ku_TR", "title": "مجمع سيد الاسعار"},
+    {"image": "https://i.ibb.co/Jjby0JYZ/ad9.png", "url": "https://www.facebook.com/anaskashmola/", "title": "خدمات إعلانية متميزة"},
+    {"image": "https://i.ibb.co/FqCZ3Sch/ad10.png", "url": "https://alnoor.edu.iq/ar/", "title": "جامعة النور الأهلية"}
 ]
 
 def render_ads_carousel():
@@ -43,10 +44,23 @@ def render_ads_carousel():
     <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
         <style>
-            body {{ margin: 0; font-family: system-ui, -apple-system, sans-serif; background: transparent; direction: ltr; }}
-            .swiper {{ width: 100%; padding: 10px 5px 30px 5px; }}
-            .swiper-slide {{ width: 250px; }}
-            .ad-card-link {{ text-decoration: none; display: block; }}
+            body {{ 
+                margin: 0; 
+                font-family: system-ui, -apple-system, sans-serif; 
+                background: transparent; 
+                direction: ltr; 
+            }}
+            .swiper {{ 
+                width: 100%; 
+                padding: 10px 5px 30px 5px; 
+            }}
+            .swiper-slide {{ 
+                width: 250px; 
+            }}
+            .ad-card-link {{ 
+                text-decoration: none; 
+                display: block; 
+            }}
             .ad-card {{ 
                 width: 100%; 
                 height: 140px; 
@@ -56,14 +70,19 @@ def render_ads_carousel():
                 transition: transform 0.2s ease, box-shadow 0.2s ease; 
                 background: #f1f5f9; 
             }}
-            .ad-card:hover {{ transform: translateY(-4px) scale(1.02); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }}
+            .ad-card:hover {{ 
+                transform: translateY(-4px) scale(1.02); 
+                box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+            }}
             .ad-card img {{ 
                 width: 100%; 
                 height: 100%; 
                 object-fit: cover; 
                 object-position: center; 
                 display: block;
-                image-rendering: -webkit-optimize-contrast; /* يحسن وضوح وجدة الصور عند تحجيمها */
+                /* تحسين حدة الصور ومنع التغبيش */
+                image-rendering: -webkit-optimize-contrast; 
+                image-rendering: crisp-edges;
             }}
         </style>
     </head>
@@ -112,16 +131,24 @@ def main():
     if 'bot_response_count' not in st.session_state:
         st.session_state.bot_response_count = 0
 
+    # تطبيق الاتجاه LTR والتنسيقات للبرنامج
     st.markdown("""
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap');
-            html, body, [class*="css"] { font-family: 'Cairo', sans-serif; direction: ltr !important; text-align: left !important; }
-            [data-testid="stSidebar"], [data-testid="stSidebarNav"], [data-testid="collapsedControl"] { display: none !important; }
-            footer {visibility: hidden;}
-            header [data-testid="stAppDeployButton"] {display: none;}
+            html, body, [class*="css"] { 
+                font-family: 'Cairo', sans-serif; 
+                direction: ltr !important; 
+                text-align: left !important; 
+            }
+            [data-testid="stSidebar"], [data-testid="stSidebarNav"], [data-testid="collapsedControl"] { 
+                display: none !important; 
+            }
+            footer { visibility: hidden; }
+            header [data-testid="stAppDeployButton"] { display: none; }
         </style>
     """, unsafe_allow_html=True)
 
+    # الهيدر العلوي
     st.markdown("""
         <div style="display: flex; align-items: center; gap: 12px; direction: ltr; margin-bottom: 15px;">
             <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
@@ -129,9 +156,11 @@ def main():
         </div>
     """, unsafe_allow_html=True)
 
+    # عرض الإعلانات في الصفحة الرئيسية
     st.write("**إعلانات:**")
     render_ads_carousel()
 
+    # إعادة عرض سجل المحادثة
     for message in st.session_state.messages:
         if message.get('type') == 'carousel':
             with st.chat_message("assistant", avatar=AD_AVATAR):
@@ -141,6 +170,7 @@ def main():
             avatar = USER_AVATAR if message['role'] == 'user' else SYSTEM_AVATAR
             st.chat_message(message['role'], avatar=avatar).markdown(message['content'])
 
+    # استقبال الإدخال من المستخدم
     prompt = st.chat_input("اكتب سؤالك هنا...")
     if prompt:
         st.chat_message('user', avatar=USER_AVATAR).markdown(prompt)
@@ -154,6 +184,7 @@ def main():
         st.session_state.messages.append({'role': 'assistant', 'type': 'text', 'content': result})
         st.session_state.bot_response_count += 1
 
+        # إظهار الإعلانات كل 3 إجابات
         if st.session_state.bot_response_count % 3 == 0:
             with st.chat_message("assistant", avatar=AD_AVATAR):
                 st.write("**اعلانات:**")
