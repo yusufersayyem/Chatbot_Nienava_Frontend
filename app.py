@@ -30,7 +30,7 @@ def render_ads_carousel():
         slides_html += f"""
         <div class="swiper-slide">
             <a href="{ad['url']}" target="_blank" class="ad-card-link">
-                <div class="ad-card">
+                <div class="ad-card" style="--bg-image: url('{ad['image']}');">
                     <img src="{ad['image']}" alt="{ad['title']}" loading="eager" />
                 </div>
             </a>
@@ -61,52 +61,58 @@ def render_ads_carousel():
                 display: block; 
             }}
             
-            /* التنسيق الزجاجي (Glassmorphism) */
             .ad-card {{ 
+                position: relative;
                 width: 100%; 
                 height: 155px; 
                 border-radius: 16px; 
                 overflow: hidden; 
-                
-                /* خلفية زجاجية شبه شفافة */
-                background: rgba(255, 255, 255, 0.45); 
-                /* تأثير التغبيش الضبابي للزجاج */
-                backdrop-filter: blur(12px); 
-                -webkit-backdrop-filter: blur(12px); 
-                
-                /* حدود زجاجية متدرجة وشبه شفافة */
-                border: 1px solid rgba(255, 255, 255, 0.6); 
-                
-                /* ظلال ناعمة تعزز العمق الزجاجي */
-                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08); 
-                
-                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
+                box-shadow: 0 6px 18px rgba(0,0,0,0.12); 
+                transition: transform 0.3s ease, box-shadow 0.3s ease; 
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                padding: 8px;
-                box-sizing: border-box;
+                border: 1px solid rgba(255, 255, 255, 0.3);
             }}
             
+            /* خلفية الكارد: انعكاس الصورة مع ضبابية وتكبير */
+            .ad-card::before {{
+                content: "";
+                position: absolute;
+                top: -10%;
+                left: -10%;
+                width: 120%;
+                height: 120%;
+                background-image: var(--bg-image);
+                background-size: cover;
+                background-position: center;
+                filter: blur(16px) brightness(0.85); /* درجة الضبابية والإضاءة */
+                transform: scale(1.1);
+                z-index: 1;
+            }}
+
             .ad-card:hover {{ 
-                transform: translateY(-6px) scale(1.02); 
-                background: rgba(255, 255, 255, 0.65); 
-                box-shadow: 0 12px 35px 0 rgba(31, 38, 135, 0.15); 
-                border: 1px solid rgba(255, 255, 255, 0.9);
+                transform: translateY(-5px) scale(1.02); 
+                box-shadow: 0 12px 25px rgba(0,0,0,0.2); 
+            }}
+
+            .ad-card:hover::before {{
+                filter: blur(12px) brightness(0.95);
             }}
             
-            /* إظهار الصورة بالكامل بدون اقتطاع */
+            /* الصورة الرئيسية في منتصف الكارد */
             .ad-card img {{ 
-                max-width: 100%; 
-                max-height: 100%; 
+                position: relative;
+                z-index: 2;
+                max-width: 92%; 
+                max-height: 92%; 
                 width: auto;
                 height: auto;
                 object-fit: contain; 
                 object-position: center; 
                 display: block;
                 border-radius: 8px;
-                image-rendering: -webkit-optimize-contrast; 
-                image-rendering: crisp-edges;
+                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25)); /* ظل خفيف لإبراز الصورة فوق الانعكاس */
             }}
         </style>
     </head>
