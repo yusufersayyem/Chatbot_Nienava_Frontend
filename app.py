@@ -126,17 +126,17 @@ def main():
     st.markdown("""
         <div style="display: flex; align-items: center; gap: 12px; direction: ltr; margin-bottom: 15px;">
             <div style="background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px;">🤖</div>
-            <h1 style="margin: 0; color: #3b82f6; font-weight: 700; font-size: 22px;">المجيب الآلي (تربية نينوى & جامعة الموصل)</h1>
+            <h1 style="margin: 0; color: #3b82f6; font-weight: 700; font-size: 22px;">المجيب الآلي تربية نينوى و جامعة الموصل)</h1>
         </div>
     """, unsafe_allow_html=True)
 
-    st.write("🌟 **إعلانات متميزة:**")
+    st.write("**إعلانات:**")
     render_ads_carousel()
 
     for message in st.session_state.messages:
         if message.get('type') == 'carousel':
             with st.chat_message("assistant", avatar=AD_AVATAR):
-                st.write("📢 **عروض وإعلانات رعاية المنصة:**")
+                st.write("**اعلانات:**")
                 render_ads_carousel()
         else:
             avatar = USER_AVATAR if message['role'] == 'user' else SYSTEM_AVATAR
@@ -157,7 +157,7 @@ def main():
 
         if st.session_state.bot_response_count % 3 == 0:
             with st.chat_message("assistant", avatar=AD_AVATAR):
-                st.write("📢 **عروض وإعلانات رعاية المنصة:**")
+                st.write("**اعلانات:**")
                 render_ads_carousel()
             st.session_state.messages.append({'role': 'assistant', 'type': 'carousel'})
 
