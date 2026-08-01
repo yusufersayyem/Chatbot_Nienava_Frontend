@@ -53,7 +53,6 @@ def render_ads_carousel():
                 width: 100%; 
                 padding: 10px 5px 30px 5px; 
             }}
-            /* تعديل عرض الكارد */
             .swiper-slide {{ 
                 width: 270px; 
             }}
@@ -61,33 +60,51 @@ def render_ads_carousel():
                 text-decoration: none; 
                 display: block; 
             }}
+            
+            /* التنسيق الزجاجي (Glassmorphism) */
             .ad-card {{ 
                 width: 100%; 
                 height: 155px; 
-                border-radius: 12px; 
+                border-radius: 16px; 
                 overflow: hidden; 
-                box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-                transition: transform 0.2s ease, box-shadow 0.2s ease; 
-                background: #ffffff; /* خلفية بيضاء لنظافة المظهر */
-                border: 1px solid #e2e8f0;
+                
+                /* خلفية زجاجية شبه شفافة */
+                background: rgba(255, 255, 255, 0.45); 
+                /* تأثير التغبيش الضبابي للزجاج */
+                backdrop-filter: blur(12px); 
+                -webkit-backdrop-filter: blur(12px); 
+                
+                /* حدود زجاجية متدرجة وشبه شفافة */
+                border: 1px solid rgba(255, 255, 255, 0.6); 
+                
+                /* ظلال ناعمة تعزز العمق الزجاجي */
+                box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08); 
+                
+                transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); 
                 display: flex;
                 align-items: center;
                 justify-content: center;
-            }}
-            .ad-card:hover {{ 
-                transform: translateY(-4px) scale(1.02); 
-                box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+                padding: 8px;
+                box-sizing: border-box;
             }}
             
-            /* احتواء الصورة بالكامل دون قص */
+            .ad-card:hover {{ 
+                transform: translateY(-6px) scale(1.02); 
+                background: rgba(255, 255, 255, 0.65); 
+                box-shadow: 0 12px 35px 0 rgba(31, 38, 135, 0.15); 
+                border: 1px solid rgba(255, 255, 255, 0.9);
+            }}
+            
+            /* إظهار الصورة بالكامل بدون اقتطاع */
             .ad-card img {{ 
                 max-width: 100%; 
                 max-height: 100%; 
                 width: auto;
                 height: auto;
-                object-fit: contain; /* تضمن إظهار الصورة بالكامل دون قص أو اجتزاء */
+                object-fit: contain; 
                 object-position: center; 
                 display: block;
+                border-radius: 8px;
                 image-rendering: -webkit-optimize-contrast; 
                 image-rendering: crisp-edges;
             }}
