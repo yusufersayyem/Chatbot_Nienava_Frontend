@@ -53,7 +53,6 @@ def render_ads_carousel():
                 width: 100%; 
                 padding: 10px 5px 30px 5px; 
             }}
-            /* تكبير عرض الكارد أفقياً */
             .swiper-slide {{ 
                 width: 320px; 
             }}
@@ -62,7 +61,6 @@ def render_ads_carousel():
                 display: block; 
             }}
             
-            /* تكبير ارتفاع الكارد عمودياً */
             .ad-card {{ 
                 position: relative;
                 width: 100%; 
@@ -102,18 +100,17 @@ def render_ads_carousel():
                 filter: blur(12px) brightness(0.95);
             }}
             
-            /* الصورة الرئيسية - أصبحت تأخذ حجم أكبر داخلياً */
+            /* الصورة الرئيسية - أصبحت تغطي أقصى حدود الكارد أفقياً أو عمودياً */
             .ad-card img {{ 
                 position: relative;
                 z-index: 2;
-                max-width: 96%; 
-                max-height: 96%; 
-                width: auto;
-                height: auto;
+                width: 100%; 
+                height: 100%; 
+                max-width: 100%; 
+                max-height: 100%; 
                 object-fit: contain; 
                 object-position: center; 
                 display: block;
-                border-radius: 8px;
                 filter: drop-shadow(0 4px 8px rgba(0,0,0,0.25));
             }}
         </style>
@@ -138,7 +135,6 @@ def render_ads_carousel():
     </body>
     </html>
     """
-    # زيادة ارتفاع المكون ليتناسب مع الحجم الجديد للكارد
     components.html(carousel_html, height=235)
 
 def ask_backend(user_query):
